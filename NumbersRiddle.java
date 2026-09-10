@@ -1,6 +1,14 @@
 public class NumbersRiddle{
     public static void main(String[] args){
-        int startingNumber = 5;
+        double startingNumber;
+        int startingPosInt = 5;
+        int startingNegInt = -5;
+        int startingZero = 0;
+        int startingOne = 1;
+        double startingPosDouble = 5.5;
+        double startingNegDouble = -5.5;
+
+        startingNumber = startingOne; // You can change this to test different starting numbers
         // Multiply by 2
         double numberDoubled = startingNumber * 2;
         
