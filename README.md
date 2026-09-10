@@ -66,4 +66,7 @@ public class NumbersRiddle {
     }
 }
 
+
 ```
+<img width="249" height="84" alt="image" src="https://github.com/user-attachments/assets/986ef7eb-0f2e-4e99-910d-54225063fdf2" />
+
