@@ -7,6 +7,7 @@ public class NumbersRiddle{
         int startingOne = 1;
         double startingPosDouble = 5.5;
         double startingNegDouble = -5.5;
+        String[] numbers = {5, -5, 0, 1, 5.5, -5.5};
 
         startingNumber = startingOne;
         // Multiply by 2

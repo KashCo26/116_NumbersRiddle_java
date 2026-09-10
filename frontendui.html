@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numbers Riddle Better</title>
+  <style>
+    /* Palette Variables */
+    :root {
+      /* Single Flat Light Teal Background */
+      --color-bg-light-teal: #e6f4f1;
+
+      /* Teal Accent Colors */
+      --color-accent-teal: #0d9488;
+      --color-teal-hover: #0f766e;
+
+      /* Contrasting Deep Plum/Violet Pop Colors */
+      --color-plum-primary: #58427c;
+      --color-plum-hover: #463463;
+      --color-plum-bright: #7359a1;
+      --color-plum-soft: #f4f0fa;
+
+      /* Light Inner Card Colors */
+      --color-card-bg: #ffffff;
+      --color-card-secondary: var(--color-plum-soft);
+      --color-input-bg: #f8fafc;
+      
+      /* Text Colors */
+      --color-text-dark: #042f2e;
+      --color-text-muted: #115e59;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      /* Flat, single light teal background (no gradient) */
+      background-color: var(--color-bg-light-teal);
+      color: var(--color-text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.5rem;
+    }
+
+    /* Clean Interior Card */
+    .card {
+      background: var(--color-card-bg);
+      border: 2px solid #b2e2db;
+      padding: 2.5rem;
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(13, 148, 136, 0.08);
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      margin: 0 0 0.5rem 0;
+      color: var(--color-accent-teal);
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .header p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    label {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--color-teal-hover);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="number"] {
+      padding: 1.1rem 1.25rem;
+      border: 2px solid #99f6e4;
+      background-color: var(--color-input-bg);
+      border-radius: 20px;
+      font-size: 1.15rem;
+      color: var(--color-text-dark);
+      font-weight: 700;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(13, 148, 136, 0.04);
+    }
+
+    /* Focus highlight with #58427C */
+    input[type="number"]:focus {
+      border-color: var(--color-plum-primary);
+      box-shadow: 0 0 0 4px rgba(88, 66, 124, 0.2);
+    }
+
+    .btn-calculate {
+      width: 100%;
+      padding: 1.1rem;
+      background-color: var(--color-plum-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(88, 66, 124, 0.3);
+    }
+
+    .btn-calculate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(88, 66, 124, 0.4);
+      background-color: var(--color-plum-hover);
+    }
+
+    .btn-calculate:active {
+      transform: translateY(0);
+    }
+
+    /* Inner Results Container with Plum Accents */
+    .results {
+      display: none;
+      margin-top: 1.75rem;
+      background-color: var(--color-card-secondary);
+      border-radius: 22px;
+      padding: 1.5rem;
+      border: 2px solid var(--color-plum-bright);
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .step {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-bottom: 1px dashed var(--color-plum-bright);
+    }
+
+    .step strong {
+      color: var(--color-teal-hover);
+      font-weight: 800;
+    }
+
+    .step-final {
+      border-bottom: none;
+      margin-top: 0.75rem;
+      padding-top: 0.85rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-text-dark);
+    }
+
+    /* High-contrast #58427C Final Result Badge */
+    .step-final .badge {
+      background-color: var(--color-plum-primary);
+      color: #ffffff;
+      padding: 0.45rem 1.1rem;
+      border-radius: 16px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(88, 66, 124, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">
+      <h1>Numbers Riddle</h1>
+      <p>Enter any number to solve the riddle.</p>
+    </div>
+
+    <div class="input-group">
+      <label for="startingNumber">Starting Number</label>
+      <input type="number" id="startingNumber" value="-5.5" step="any">
+    </div>
+
+    <button class="btn-calculate" onclick="runRiddle()">Run Riddle</button>
+
+    <div class="results" id="results">
+      <!-- Steps rendered via JS -->
+    </div>
+  </div>
+
+  <script>
+    function runRiddle() {
+      const startingNumberInput = document.getElementById('startingNumber').value;
+      const resultsDiv = document.getElementById('results');
+
+      if (startingNumberInput === '') {
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+          <div style="text-align: center; color: var(--color-text-muted); font-weight: 600;">
+            Please enter a valid number.
+          </div>`;
+        return;
+      }
+
+      const startingNumber = parseFloat(startingNumberInput);
+
+      // Java steps translated from NumbersRiddleBetter
+      const numberAdded = startingNumber + 1.5;
+      const numberDoubled = numberAdded * 2;
+      const subtractStartingTwice = numberDoubled - (2 * startingNumber);
+      const addNine = subtractStartingTwice + 9;
+      const divideFour = addNine / 4;
+
+      // Render outputs to UI
+      resultsDiv.innerHTML = `
+        <div class="step"><span>Starting Number:</span> <strong>${startingNumber}</strong></div>
+        <div class="step"><span>Add 1.5:</span> <strong>${numberAdded}</strong></div>
+        <div class="step"><span>Multiplied by 2:</span> <strong>${numberDoubled}</strong></div>
+        <div class="step"><span>Subtract Starting Number Twice:</span> <strong>${subtractStartingTwice}</strong></div>
+        <div class="step"><span>Add 9:</span> <strong>${addNine}</strong></div>
+        <div class="step step-final">
+          <span>Final Result:</span> 
+          <span class="badge">${divideFour}</span>
+        </div>
+      `;
+
+      // Display the results block
+      resultsDiv.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
