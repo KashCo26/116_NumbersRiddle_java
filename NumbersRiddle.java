@@ -8,7 +8,7 @@ public class NumbersRiddle{
         double startingPosDouble = 5.5;
         double startingNegDouble = -5.5;
 
-        startingNumber = startingOne; // You can change this to test different starting numbers
+        startingNumber = startingOne;
         // Multiply by 2
         double numberDoubled = startingNumber * 2;
         
