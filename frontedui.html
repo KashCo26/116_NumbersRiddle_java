@@ -235,14 +235,14 @@
         value = parts[0] + '.' + parts.slice(1).join('');
       }
 
-      // Truncate whole digits to 5 max and decimals to 5 max
+      // Truncate whole digits to 10 max and decimals to 10 max
       if (value.includes('.')) {
         let [integerPart, decimalPart] = value.split('.');
-        if (integerPart.length > 5) integerPart = integerPart.slice(0, 5);
-        if (decimalPart.length > 5) decimalPart = decimalPart.slice(0, 5);
+        if (integerPart.length > 10) integerPart = integerPart.slice(0, 10);
+        if (decimalPart.length > 10) decimalPart = decimalPart.slice(0, 10);
         value = integerPart + '.' + decimalPart;
       } else {
-        if (value.length > 5) value = value.slice(0, 5);
+        if (value.length > 10) value = value.slice(0, 10);
       }
 
       // Re-apply negative sign
