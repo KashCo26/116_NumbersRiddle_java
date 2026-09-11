@@ -205,7 +205,7 @@
 
     <div class="input-group">
       <label for="startingNumber">Starting Number</label>
-      <input type="number" id="startingNumber" maxlength="5" value="" step="any">
+      <input type="number" id="startingNumber" step="0.001" oninput="limitInput(this)" value="">
     </div>
 
     <button class="btn-calculate" onclick="runRiddle()">Run Riddle</button>
@@ -216,11 +216,44 @@
   </div>
 
   <script>
+    function limitInput(input) {
+      let value = input.value;
+
+      // Handle negative signs cleanly if user types negative numbers
+      const isNegative = value.startsWith('-');
+      if (isNegative) {
+        value = value.substring(1);
+      }
+
+      if (value.includes('.')) {
+        let [integerPart, decimalPart] = value.split('.');
+        
+        // Limit total integer digits to 5
+        if (integerPart.length > 5) {
+          integerPart = integerPart.slice(0, 5);
+        }
+        
+        // Limit decimal places to 3
+        if (decimalPart.length > 3) {
+          decimalPart = decimalPart.slice(0, 3);
+        }
+        
+        value = integerPart + '.' + decimalPart;
+      } else {
+        // Limit integer digits to 5 if no decimal exists yet
+        if (value.length > 5) {
+          value = value.slice(0, 5);
+        }
+      }
+
+      input.value = isNegative ? '-' + value : value;
+    }
+
     function runRiddle() {
       const startingNumberInput = document.getElementById('startingNumber').value;
       const resultsDiv = document.getElementById('results');
 
-      if (startingNumberInput === '') {
+      if (startingNumberInput === '' || isNaN(parseFloat(startingNumberInput))) {
         resultsDiv.style.display = 'block';
         resultsDiv.innerHTML = `
           <div style="text-align: center; color: var(--color-text-muted); font-weight: 600;">
