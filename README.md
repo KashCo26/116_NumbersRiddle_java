@@ -70,6 +70,7 @@ public class NumbersRiddle {
 ```
 ### Positive Integer Test Case
 <img width="249" height="84" alt="image" src="https://github.com/user-attachments/assets/986ef7eb-0f2e-4e99-910d-54225063fdf2" />
+
 ### Negative Integer Test Case
 <img width="226" height="83" alt="image" src="https://github.com/user-attachments/assets/2a1185b0-7b5b-4099-8116-bb16ef282dfc" />
 ### 0 Number Test Case
