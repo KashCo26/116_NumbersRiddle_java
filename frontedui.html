@@ -204,7 +204,7 @@
 
     <div class="input-group">
       <label for="startingNumber">Starting Number</label>
-      <input type="text" id="startingNumber" inputmode="decimal" onkeydown="preventExtraDigits(event)">
+      <input type="text" id="startingNumber" inputmode="decimal" oninput="limitToFiveDecimals(this)">
     </div>
 
     <button class="btn-calculate" onclick="runRiddle()">Run Riddle</button>
@@ -215,6 +215,45 @@
   </div>
 
   <script>
+    function limitToFiveDecimals(input) {
+      let cursorPosition = input.selectionStart;
+      let originalLength = input.value.length;
+      let value = input.value;
+
+      // Allow negative sign at start
+      const isNegative = value.startsWith('-');
+      if (isNegative) {
+        value = value.substring(1);
+      }
+
+      // Remove invalid characters except digits and decimal point
+      value = value.replace(/[^0-9.]/g, '');
+
+      // Keep only first decimal point if multiple are entered
+      const parts = value.split('.');
+      if (parts.length > 2) {
+        value = parts[0] + '.' + parts.slice(1).join('');
+      }
+
+      // Truncate whole digits to 5 max and decimals to 5 max
+      if (value.includes('.')) {
+        let [integerPart, decimalPart] = value.split('.');
+        if (integerPart.length > 5) integerPart = integerPart.slice(0, 5);
+        if (decimalPart.length > 5) decimalPart = decimalPart.slice(0, 5);
+        value = integerPart + '.' + decimalPart;
+      } else {
+        if (value.length > 5) value = value.slice(0, 5);
+      }
+
+      // Re-apply negative sign
+      input.value = isNegative ? '-' + value : value;
+
+      // Maintain user cursor position cleanly without jumping to the end
+      let newLength = input.value.length;
+      cursorPosition = cursorPosition - (originalLength - newLength);
+      input.setSelectionRange(cursorPosition, cursorPosition);
+    }
+
     function runRiddle() {
       const startingNumberInput = document.getElementById('startingNumber').value.trim();
       const resultsDiv = document.getElementById('results');
@@ -252,60 +291,6 @@
 
       // Display the results block
       resultsDiv.style.display = 'block';
-    }
-
-    function preventExtraDigits(event) {
-      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
-      if (allowedKeys.includes(event.key) || event.ctrlKey || event.metaKey) return;
-
-      const input = event.target;
-      const value = input.value;
-      const selectionStart = input.selectionStart;
-      const selectionEnd = input.selectionEnd;
-
-      // Allow typing if text is actively selected (since typing overwrites selection)
-      if (selectionStart !== selectionEnd) return;
-
-      const parts = value.split('.');
-      const integerPart = parts[0].replace('-', '');
-      const decimalPart = parts[1] || '';
-      const hasDecimal = value.includes('.');
-
-      // Allow typing negative sign only at the very beginning if not already negative
-      if (event.key === '-') {
-        if (selectionStart !== 0 || value.includes('-')) {
-          event.preventDefault();
-        }
-        return;
-      }
-
-      // Prevent entering non-numeric / non-decimal inputs
-      if (!/^[0-9.]$/.test(event.key)) {
-        event.preventDefault();
-        return;
-      }
-
-      // Prevent entering a second decimal point
-      if (event.key === '.' && hasDecimal) {
-        event.preventDefault();
-        return;
-      }
-
-      // Handle integer and decimal limits relative to current cursor position
-      if (/^[0-9]$/.test(event.key)) {
-        if (hasDecimal) {
-          const dotIndex = value.indexOf('.');
-          if (selectionStart <= dotIndex && integerPart.length >= 5) {
-            event.preventDefault();
-          } else if (selectionStart > dotIndex && decimalPart.length >= 3) {
-            event.preventDefault();
-          }
-        } else {
-          if (integerPart.length >= 5) {
-            event.preventDefault();
-          }
-        }
-      }
     }
   </script>
 
