@@ -7,15 +7,15 @@ This project demonstrates the **Numbers Riddle** program in Java. The program te
 
 ---
 
-## Scoring Checklist & Requirements
+## Checklist & Requirements
 
-### Part A. Program Code (60 Points)
+### Part A. Program Code
 
-* **Display Original Number (+6):** Prints the starting test value prior to execution.
-* **Perform Operation (+30):** Executes each step of the riddle operations (Multiply by 2, Add 6, Divide by 2, Subtract starting number).
-* **Display Results (+24):** Outputs the result after each arithmetic operation step.
+* **Display Original Number :** Prints the starting test value prior to execution. (DONE)
+* **Perform Operation :** Executes each step of the riddle operations (Multiply by 2, Add 6, Divide by 2, Subtract starting number). (DONE)
+* **Display Results :** Outputs the result after each arithmetic operation step. (DONE)
 
-### Part B. Test Values (6 Points)
+### Part B. Test Values 
 
 The program supplies and tests the riddle with six distinct categories of input:
 
@@ -38,7 +38,7 @@ The program supplies and tests the riddle with six distinct categories of input:
 
 ---
 
-## Example Usage & Code Structure
+## Our Code Structure
 
 ```java
 public class NumbersRiddle {
