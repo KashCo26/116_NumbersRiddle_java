@@ -37,7 +37,6 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      /* Flat, single light teal background (no gradient) */
       background-color: var(--color-bg-light-teal);
       color: var(--color-text-dark);
       display: flex;
@@ -94,7 +93,7 @@
       letter-spacing: 0.05em;
     }
 
-    input[type="number"] {
+    input[type="text"] {
       padding: 1.1rem 1.25rem;
       border: 2px solid #99f6e4;
       background-color: var(--color-input-bg);
@@ -107,7 +106,7 @@
     }
 
     /* Focus highlight with #58427C */
-    input[type="number"]:focus {
+    input[type="text"]:focus {
       border-color: var(--color-plum-primary);
       box-shadow: 0 0 0 4px rgba(88, 66, 124, 0.2);
     }
@@ -205,7 +204,7 @@
 
     <div class="input-group">
       <label for="startingNumber">Starting Number</label>
-      <input type="number" id="startingNumber" step="0.001" onkeydown="preventExtraDigits(event)">
+      <input type="text" id="startingNumber" inputmode="decimal" onkeydown="preventExtraDigits(event)">
     </div>
 
     <button class="btn-calculate" onclick="runRiddle()">Run Riddle</button>
@@ -217,10 +216,10 @@
 
   <script>
     function runRiddle() {
-      const startingNumberInput = document.getElementById('startingNumber').value;
+      const startingNumberInput = document.getElementById('startingNumber').value.trim();
       const resultsDiv = document.getElementById('results');
 
-      if (startingNumberInput === '') {
+      if (startingNumberInput === '' || isNaN(parseFloat(startingNumberInput))) {
         resultsDiv.style.display = 'block';
         resultsDiv.innerHTML = `
           <div style="text-align: center; color: var(--color-text-muted); font-weight: 600;">
@@ -264,7 +263,7 @@
       const selectionStart = input.selectionStart;
       const selectionEnd = input.selectionEnd;
 
-      // If text is selected, typing will overwrite it, so allow
+      // Allow typing if text is actively selected (since typing overwrites selection)
       if (selectionStart !== selectionEnd) return;
 
       const parts = value.split('.');
@@ -272,27 +271,37 @@
       const decimalPart = parts[1] || '';
       const hasDecimal = value.includes('.');
 
-      // Prevent entering more than one decimal point
+      // Allow typing negative sign only at the very beginning if not already negative
+      if (event.key === '-') {
+        if (selectionStart !== 0 || value.includes('-')) {
+          event.preventDefault();
+        }
+        return;
+      }
+
+      // Prevent entering non-numeric / non-decimal inputs
+      if (!/^[0-9.]$/.test(event.key)) {
+        event.preventDefault();
+        return;
+      }
+
+      // Prevent entering a second decimal point
       if (event.key === '.' && hasDecimal) {
         event.preventDefault();
         return;
       }
 
-      // Check limits when typing digits
+      // Handle integer and decimal limits relative to current cursor position
       if (/^[0-9]$/.test(event.key)) {
         if (hasDecimal) {
           const dotIndex = value.indexOf('.');
-          // If typing before the decimal point, check 5-digit limit
           if (selectionStart <= dotIndex && integerPart.length >= 5) {
             event.preventDefault();
-          }
-          // If typing after the decimal point, check 3-decimal limit
-          else if (selectionStart > dotIndex && decimalPart.length >= 3) {
+          } else if (selectionStart > dotIndex && decimalPart.length >= 3) {
             event.preventDefault();
           }
         } else {
-          // If no decimal exists yet, limit whole numbers to 5 digits
-          if (integerPart.length >= 5 && event.key !== '.') {
+          if (integerPart.length >= 5) {
             event.preventDefault();
           }
         }
