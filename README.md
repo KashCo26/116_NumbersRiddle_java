@@ -1,4 +1,3 @@
-﻿# 1.1.6 Numbers Riddles
 # Project 1.1.6: Numbers Riddle
 
 ## Project Description
