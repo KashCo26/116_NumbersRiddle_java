@@ -68,14 +68,15 @@ public class NumbersRiddle {
 
 
 ```
+### Positive Integer Test Case
 <img width="249" height="84" alt="image" src="https://github.com/user-attachments/assets/986ef7eb-0f2e-4e99-910d-54225063fdf2" />
-
+### Negative Integer Test Case
 <img width="226" height="83" alt="image" src="https://github.com/user-attachments/assets/2a1185b0-7b5b-4099-8116-bb16ef282dfc" />
-
+### 0 Number Test Case
 <img width="231" height="84" alt="image" src="https://github.com/user-attachments/assets/201131f3-5343-4e05-8a80-4425b15c856d" />
-
+### 1 Number Test Case
 <img width="223" height="84" alt="image" src="https://github.com/user-attachments/assets/94404fb0-1018-4fce-bc4b-689b61de4dc2" />
-
+### Positive Double Test Case
 <img width="265" height="91" alt="image" src="https://github.com/user-attachments/assets/47a781a8-891a-443a-a511-2a22dc3ddda1" />
-
+### Negative Double Test Case
 <img width="255" height="86" alt="image" src="https://github.com/user-attachments/assets/22e71a84-0b04-4555-8ea2-a443cf9a8a06" />
